@@ -30,9 +30,13 @@ public sealed class PlacementInformation
     public int Range { get; set; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public int TileType { get; set; }
+    /// <summary>
+    ///  If a tile has multiple variants , determines which one shall be used
+    /// </summary>
+    public byte TileVariantIndex { get; set; }
 
     /// <summary>
     /// Number of times the entity can be placed

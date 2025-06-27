@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Robust.Client.Graphics;
+using Robust.Client.Graphics.Clyde;
 using Robust.Client.Placement;
 using Robust.Client.Placement.Modes;
 using Robust.Client.ResourceManagement;
@@ -32,6 +33,8 @@ public sealed class TileSpawningUIController : UIController
     private bool _eraseTile;
     private bool _mirrorableTile; // Tracks if the chosen tile even can be mirrored.
     private bool _mirroredTile;
+    private byte _variantIndex = 0;
+    private int lastType;
 
     public override void Initialize()
     {
@@ -44,13 +47,16 @@ public sealed class TileSpawningUIController : UIController
 
     private void StartTilePlacement(int tileType)
     {
+        _variantIndex = (byte)(tileType == lastType ? _variantIndex + 1 : 0);
         var newObjInfo = new PlacementInformation
         {
             PlacementOption = nameof(AlignTileAny),
             TileType = tileType,
             Range = 400,
-            IsTile = true
+            IsTile = true,
+            TileVariantIndex = _variantIndex,
         };
+        lastType = tileType;
 
         _placement.BeginPlacing(newObjInfo);
     }

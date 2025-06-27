@@ -24,6 +24,7 @@ namespace Robust.Shared.Network.Messages
         public bool Replacement { get; set; }
         public bool IsTile { get; set; }
         public int TileType { get; set; }
+        public byte TileVariant { get; set; }
         public string EntityTemplateName { get; set; }
         public NetCoordinates NetCoordinates { get; set; }
         public Direction DirRcv { get; set; }

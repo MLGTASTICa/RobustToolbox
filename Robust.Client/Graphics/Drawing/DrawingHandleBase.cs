@@ -28,7 +28,7 @@ namespace Robust.Client.Graphics
         /// </summary>
         public Color Modulate { get; set; } = Color.White;
 
-        protected Texture White;
+        public Texture White;
 
         public DrawingHandleBase(Texture white)
         {

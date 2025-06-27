@@ -180,13 +180,13 @@ namespace Robust.Server.Placement
             else
             {
                 if (_tileDefinitionManager[tileType].AllowRotationMirror)
-                    PlaceNewTile(tileType, coordinates, msg.MsgChannel.UserId, Tile.DirectionToByte(dirRcv), msg.Mirrored);
+                    PlaceNewTile(tileType, coordinates, msg.MsgChannel.UserId, Tile.DirectionToByte(dirRcv), msg.Mirrored, msg.TileVariant);
                 else
-                    PlaceNewTile(tileType, coordinates, msg.MsgChannel.UserId, Tile.DirectionToByte(Direction.South), false);
+                    PlaceNewTile(tileType, coordinates, msg.MsgChannel.UserId, Tile.DirectionToByte(Direction.South), false, msg.TileVariant);
             }
         }
 
-        private void PlaceNewTile(int tileType, EntityCoordinates coordinates, NetUserId placingUserId, byte direction, bool mirrored)
+        private void PlaceNewTile(int tileType, EntityCoordinates coordinates, NetUserId placingUserId, byte direction, bool mirrored, byte tileVariant = 0)
         {
             if (!coordinates.IsValid(_entityManager)) return;
 
@@ -196,7 +196,7 @@ namespace Robust.Server.Placement
             if (_entityManager.TryGetComponent(coordinates.EntityId, out grid)
                 || _mapManager.TryFindGridAt(_xformSystem.ToMapCoordinates(coordinates), out gridId, out grid))
             {
-                _maps.SetTile(gridId, grid, coordinates, new Tile(tileType, rotationMirroring: (byte)(direction + (mirrored ? 4 : 0))));
+                _maps.SetTile(gridId, grid, coordinates, new Tile(tileType,variant: (byte)tileVariant, rotationMirroring: (byte)(direction + (mirrored ? 4 : 0))));
 
                 var placementEraseEvent = new PlacementTileEvent(tileType, coordinates, placingUserId);
                 _entityManager.EventBus.RaiseEvent(EventSource.Local, placementEraseEvent);

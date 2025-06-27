@@ -821,7 +821,6 @@ namespace Robust.Client.Placement
                 var tuple = new Tuple<EntityCoordinates, TimeSpan>(coordinates, _time.RealTime + PendingTileTimeout);
                 _pendingTileChanges.Add(tuple);
             }
-
             var message = new MsgPlacement
             {
                 PlaceType = PlacementManagerMessage.RequestPlacement,
@@ -834,6 +833,7 @@ namespace Robust.Client.Placement
             {
                 message.TileType = CurrentPermission.TileType;
                 message.Mirrored = Mirrored;
+                message.TileVariant = CurrentPermission.TileVariantIndex;
             }
             else
             {
